@@ -4,5 +4,5 @@ export function filterResources(
   resources: Resource[],
   search: string,
 ): Resource[] {
-  return resources;
+  return resources.filter((resource) => resource.title.includes(search));
 }
