@@ -21,4 +21,20 @@ describe("filterResources", () => {
 
     expect(filterResources([mindful], "MINDFUL")).toEqual([mindful]);
   });
+  it("returns resources with a tag that contains the search", () => {
+    const smoothie = makeResource({
+      id: "001",
+      title: "Energy Boost Smoothie",
+      tags: ["nutrition", "energy"],
+    });
+    const stretch = makeResource({
+      id: "002",
+      title: "10-Minute Morning Stretch",
+      tags: ["mobility"],
+    });
+
+    expect(filterResources([smoothie, stretch], "nutrition")).toEqual([
+      smoothie,
+    ]);
+  });
 });
