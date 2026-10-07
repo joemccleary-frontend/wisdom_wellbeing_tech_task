@@ -6,5 +6,9 @@ export type ResourceGroup = {
 };
 
 export function groupByCategory(resources: Resource[]): ResourceGroup[] {
-  return [];
+  if (resources.length === 0) {
+    return [];
+  }
+
+  return [{ category: resources[0].category, resources }];
 }
