@@ -30,4 +30,30 @@ describe("ResourceGroups", () => {
       screen.getByRole("region", { name: "Articles" }),
     ).toBeInTheDocument();
   });
+  it("shows each resource inside its category section", () => {
+    const resources = [
+      makeResource({
+        id: "001",
+        category: "Podcasts",
+        title: "Mindful Moments",
+      }),
+      makeResource({
+        id: "002",
+        category: "Articles",
+        title: "The Science of Sleep",
+      }),
+    ];
+
+    render(<ResourceGroups resources={resources} />);
+
+    const podcasts = screen.getByRole("region", { name: "Podcasts" });
+    const articles = screen.getByRole("region", { name: "Articles" });
+
+    expect(
+      within(podcasts).getByRole("heading", { name: "Mindful Moments" }),
+    ).toBeInTheDocument();
+    expect(
+      within(articles).getByRole("heading", { name: "The Science of Sleep" }),
+    ).toBeInTheDocument();
+  });
 });
