@@ -17,4 +17,11 @@ describe("groupByCategory", () => {
   it("returns no groups when there are no resources", () => {
     expect(groupByCategory([])).toEqual([]);
   });
+  it("puts a single resource in a group for its category", () => {
+    const podcast = makeResource({ id: "001", category: "Podcasts" });
+
+    expect(groupByCategory([podcast])).toEqual([
+      { category: "Podcasts", resources: [podcast] },
+    ]);
+  });
 });
