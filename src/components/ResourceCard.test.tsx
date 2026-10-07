@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import { ResourceCard } from "./ResourceCard";
 import type { Resource } from "../types/resource";
 
@@ -21,10 +21,21 @@ describe("ResourceCard", () => {
       screen.getByRole("heading", { name: "Mindful Moments" }),
     ).toBeInTheDocument();
   });
-});
+  it("shows the duration in minutes", () => {
+    render(<ResourceCard resource={resource} />);
 
-it("shows the duration in minutes", () => {
-  render(<ResourceCard resource={resource} />);
+    expect(screen.getByText("25 min")).toBeInTheDocument();
+  });
+  it("shows each tag", () => {
+    render(<ResourceCard resource={resource} />);
 
-  expect(screen.getByText("25 min")).toBeInTheDocument();
+    const tagList = screen.getByRole("list", { name: "Tags" });
+    const tags = within(tagList).getAllByRole("listitem");
+
+    expect(tags.map((tag) => tag.textContent)).toEqual([
+      "wellbeing",
+      "mindfulness",
+      "relaxation",
+    ]);
+  });
 });
