@@ -9,6 +9,7 @@ const MAX_TAGS = 3;
 export function ResourceCard({ resource }: ResourceCardProps) {
   return (
     <article>
+      <img src={resource.thumbnail} alt="" />
       <h3>{resource.title}</h3>
       <p>{resource.duration} min</p>
       <ul aria-label="Tags">
