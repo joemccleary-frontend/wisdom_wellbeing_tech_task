@@ -49,4 +49,12 @@ describe("ResourceCard", () => {
     const tagList = screen.getByRole("list", { name: "Tags" });
     expect(within(tagList).getAllByRole("listitem")).toHaveLength(3);
   });
+  it("shows the thumbnail image", () => {
+    render(<ResourceCard resource={resource} />);
+
+    expect(screen.getByRole("presentation")).toHaveAttribute(
+      "src",
+      "https://example.com/photo.jpg",
+    );
+  });
 });
