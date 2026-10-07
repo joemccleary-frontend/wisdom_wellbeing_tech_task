@@ -35,4 +35,17 @@ describe("App", () => {
       screen.queryByRole("heading", { name: "Mindful Moments" }),
     ).not.toBeInTheDocument();
   });
+  it("tells the user when no resources match their search", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await user.type(
+      screen.getByRole("searchbox", { name: "Search by title or tag" }),
+      "zzz",
+    );
+
+    expect(
+      screen.getByText("No resources match your search."),
+    ).toBeInTheDocument();
+  });
 });
