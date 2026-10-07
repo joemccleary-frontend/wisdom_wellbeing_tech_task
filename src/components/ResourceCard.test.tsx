@@ -22,3 +22,9 @@ describe("ResourceCard", () => {
     ).toBeInTheDocument();
   });
 });
+
+it("shows the duration in minutes", () => {
+  render(<ResourceCard resource={resource} />);
+
+  expect(screen.getByText("25 min")).toBeInTheDocument();
+});
