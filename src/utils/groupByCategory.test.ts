@@ -34,4 +34,14 @@ describe("groupByCategory", () => {
       { category: "Articles", resources: [article] },
     ]);
   });
+  it("orders groups by category order, not input order", () => {
+    const article = makeResource({ id: "001", category: "Articles" });
+    const podcast = makeResource({ id: "002", category: "Podcasts" });
+
+    const categories = groupByCategory([article, podcast]).map(
+      (group) => group.category,
+    );
+
+    expect(categories).toEqual(["Podcasts", "Articles"]);
+  });
 });
