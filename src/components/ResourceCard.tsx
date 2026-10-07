@@ -10,7 +10,7 @@ export function ResourceCard({ resource }: ResourceCardProps) {
       <h3>{resource.title}</h3>
       <p>{resource.duration} min</p>
       <ul aria-label="Tags">
-        {resource.tags.map((tag) => (
+        {resource.tags.slice(0, 3).map((tag) => (
           <li key={tag}>{tag}</li>
         ))}
       </ul>
