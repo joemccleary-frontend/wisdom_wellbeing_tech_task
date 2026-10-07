@@ -1,3 +1,4 @@
+import { CATEGORIES } from "../types/resource";
 import type { Category, Resource } from "../types/resource";
 
 export type ResourceGroup = {
@@ -6,16 +7,8 @@ export type ResourceGroup = {
 };
 
 export function groupByCategory(resources: Resource[]): ResourceGroup[] {
-  const groups = new Map<Category, Resource[]>();
-
-  for (const resource of resources) {
-    const group = groups.get(resource.category) ?? [];
-    group.push(resource);
-    groups.set(resource.category, group);
-  }
-
-  return Array.from(groups, ([category, resources]) => ({
+  return CATEGORIES.map((category) => ({
     category,
-    resources,
-  }));
+    resources: resources.filter((resource) => resource.category === category),
+  })).filter((group) => group.resources.length > 0);
 }
