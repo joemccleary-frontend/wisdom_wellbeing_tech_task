@@ -37,4 +37,9 @@ describe("filterResources", () => {
       smoothie,
     ]);
   });
+  it("ignores spaces around the search", () => {
+    const mindful = makeResource({ id: "001", title: "Mindful Moments" });
+
+    expect(filterResources([mindful], "  mindful  ")).toEqual([mindful]);
+  });
 });
