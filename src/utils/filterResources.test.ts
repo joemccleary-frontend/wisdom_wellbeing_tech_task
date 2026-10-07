@@ -10,4 +10,10 @@ describe("filterResources", () => {
 
     expect(filterResources(resources, "")).toEqual(resources);
   });
+  it("returns resources whose title contains the search", () => {
+    const mindful = makeResource({ id: "001", title: "Mindful Moments" });
+    const sleep = makeResource({ id: "002", title: "The Science of Sleep" });
+
+    expect(filterResources([mindful, sleep], "Sleep")).toEqual([sleep]);
+  });
 });
