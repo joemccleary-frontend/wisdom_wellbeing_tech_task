@@ -16,4 +16,9 @@ describe("filterResources", () => {
 
     expect(filterResources([mindful, sleep], "Sleep")).toEqual([sleep]);
   });
+  it("ignores case when matching", () => {
+    const mindful = makeResource({ id: "001", title: "Mindful Moments" });
+
+    expect(filterResources([mindful], "MINDFUL")).toEqual([mindful]);
+  });
 });
