@@ -38,4 +38,15 @@ describe("ResourceCard", () => {
       "relaxation",
     ]);
   });
+  it("shows no more than 3 tags", () => {
+    const resourceWithFourTags: Resource = {
+      ...resource,
+      tags: ["wellbeing", "mindfulness", "relaxation", "sleep"],
+    };
+
+    render(<ResourceCard resource={resourceWithFourTags} />);
+
+    const tagList = screen.getByRole("list", { name: "Tags" });
+    expect(within(tagList).getAllByRole("listitem")).toHaveLength(3);
+  });
 });
