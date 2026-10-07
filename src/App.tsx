@@ -27,7 +27,11 @@ function App() {
           className="w-full max-w-md rounded-lg border border-slate-300 px-4 py-2 focus:border-teal-600 focus:ring-2 focus:ring-teal-600/30 focus:outline-none"
         />
       </div>
-      <ResourceGroups resources={filteredResources} />
+      {filteredResources.length > 0 ? (
+        <ResourceGroups resources={filteredResources} />
+      ) : (
+        <p className="text-slate-600">No resources match your search.</p>
+      )}{" "}
     </main>
   );
 }
