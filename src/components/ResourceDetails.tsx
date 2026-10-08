@@ -60,6 +60,13 @@ export function ResourceDetails({ resource, onClose }: ResourceDetailsProps) {
             </li>
           ))}
         </ul>
+        <button
+          type="button"
+          onClick={() => dialogRef.current?.close()}
+          className="self-end rounded-lg bg-teal-700 px-4 py-2 font-medium text-white hover:bg-teal-800 focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2 focus-visible:outline-none"
+        >
+          Close
+        </button>
       </div>
     </dialog>
   );
