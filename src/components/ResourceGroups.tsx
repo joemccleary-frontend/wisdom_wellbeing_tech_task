@@ -4,9 +4,10 @@ import { ResourceCard } from "./ResourceCard";
 
 type ResourceGroupsProps = {
   resources: Resource[];
+  onSelect: (resource: Resource) => void;
 };
 
-export function ResourceGroups({ resources }: ResourceGroupsProps) {
+export function ResourceGroups({ resources, onSelect }: ResourceGroupsProps) {
   return (
     <div className="grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
       {groupByCategory(resources).map(({ category, resources }) => {
@@ -23,7 +24,7 @@ export function ResourceGroups({ resources }: ResourceGroupsProps) {
             <ul className="space-y-6">
               {resources.map((resource) => (
                 <li key={resource.id}>
-                  <ResourceCard resource={resource} />
+                  <ResourceCard resource={resource} onSelect={onSelect} />{" "}
                 </li>
               ))}
             </ul>

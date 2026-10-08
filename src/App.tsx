@@ -2,9 +2,14 @@ import { useState } from "react";
 import { ResourceGroups } from "./components/ResourceGroups";
 import { resources } from "./data/resource";
 import { filterResources } from "./utils/filterResources";
+import { ResourceDetails } from "./components/ResourceDetails";
+import type { Resource } from "./types/resource";
 
 function App() {
   const [search, setSearch] = useState("");
+  const [selectedResource, setSelectedResource] = useState<Resource | null>(
+    null,
+  );
   const filteredResources = filterResources(resources, search);
 
   return (
@@ -28,10 +33,19 @@ function App() {
         />
       </div>
       {filteredResources.length > 0 ? (
-        <ResourceGroups resources={filteredResources} />
+        <ResourceGroups
+          resources={filteredResources}
+          onSelect={setSelectedResource}
+        />
       ) : (
         <p className="text-slate-600">No resources match your search.</p>
-      )}{" "}
+      )}
+      {selectedResource && (
+        <ResourceDetails
+          resource={selectedResource}
+          onClose={() => setSelectedResource(null)}
+        />
+      )}
     </main>
   );
 }
