@@ -1,6 +1,7 @@
 import { render, screen, within } from "@testing-library/react";
 import { ResourceCard } from "./ResourceCard";
 import type { Resource } from "../types/resource";
+import userEvent from "@testing-library/user-event";
 
 const resource: Resource = {
   id: "001",
@@ -15,20 +16,17 @@ const resource: Resource = {
 
 describe("ResourceCard", () => {
   it("shows the resource title", () => {
-    render(<ResourceCard resource={resource} />);
-
+    render(<ResourceCard resource={resource} onSelect={vi.fn()} />);
     expect(
       screen.getByRole("heading", { name: "Mindful Moments" }),
     ).toBeInTheDocument();
   });
   it("shows the duration in minutes", () => {
-    render(<ResourceCard resource={resource} />);
-
+    render(<ResourceCard resource={resource} onSelect={vi.fn()} />);
     expect(screen.getByText("25 min")).toBeInTheDocument();
   });
   it("shows each tag", () => {
-    render(<ResourceCard resource={resource} />);
-
+    render(<ResourceCard resource={resource} onSelect={vi.fn()} />);
     const tagList = screen.getByRole("list", { name: "Tags" });
     const tags = within(tagList).getAllByRole("listitem");
 
@@ -44,17 +42,27 @@ describe("ResourceCard", () => {
       tags: ["wellbeing", "mindfulness", "relaxation", "sleep"],
     };
 
-    render(<ResourceCard resource={resourceWithFourTags} />);
+    render(<ResourceCard resource={resourceWithFourTags} onSelect={vi.fn()} />);
 
     const tagList = screen.getByRole("list", { name: "Tags" });
     expect(within(tagList).getAllByRole("listitem")).toHaveLength(3);
   });
   it("shows the thumbnail image", () => {
-    render(<ResourceCard resource={resource} />);
+    render(<ResourceCard resource={resource} onSelect={vi.fn()} />);
 
     expect(screen.getByRole("presentation")).toHaveAttribute(
       "src",
       "https://example.com/photo.jpg",
     );
+  });
+  it("calls onSelect with the resource when its title is clicked", async () => {
+    const user = userEvent.setup();
+    const onSelect = vi.fn();
+
+    render(<ResourceCard resource={resource} onSelect={onSelect} />);
+
+    await user.click(screen.getByRole("button", { name: "Mindful Moments" }));
+
+    expect(onSelect).toHaveBeenCalledWith(resource);
   });
 });

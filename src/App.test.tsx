@@ -48,4 +48,30 @@ describe("App", () => {
       screen.getByText("No resources match your search."),
     ).toBeInTheDocument();
   });
+  it("shows a resource's full details when it is clicked", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await user.click(screen.getByRole("button", { name: "Mindful Moments" }));
+
+    const dialog = screen.getByRole("dialog", { name: "Mindful Moments" });
+    expect(
+      within(dialog).getByText(
+        "A calming podcast focused on mindfulness techniques for daily life.",
+      ),
+    ).toBeInTheDocument();
+    expect(
+      within(dialog).getByText("Uploaded 10 July 2025"),
+    ).toBeInTheDocument();
+  });
+
+  it("hides the resource details when they are closed", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await user.click(screen.getByRole("button", { name: "Mindful Moments" }));
+    await user.click(screen.getByRole("button", { name: "Close" }));
+
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  });
 });

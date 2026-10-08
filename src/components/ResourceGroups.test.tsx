@@ -9,8 +9,7 @@ describe("ResourceGroups", () => {
       makeResource({ id: "002", category: "Articles" }),
     ];
 
-    render(<ResourceGroups resources={resources} />);
-
+    render(<ResourceGroups resources={resources} onSelect={vi.fn()} />);
     expect(
       screen.getByRole("region", { name: "Podcasts" }),
     ).toBeInTheDocument();
@@ -32,7 +31,7 @@ describe("ResourceGroups", () => {
       }),
     ];
 
-    render(<ResourceGroups resources={resources} />);
+    render(<ResourceGroups resources={resources} onSelect={vi.fn()} />);
 
     const podcasts = screen.getByRole("region", { name: "Podcasts" });
     const articles = screen.getByRole("region", { name: "Articles" });
