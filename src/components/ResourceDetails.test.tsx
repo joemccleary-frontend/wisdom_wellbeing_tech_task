@@ -1,6 +1,7 @@
 import { render, screen, within } from "@testing-library/react";
 import { ResourceDetails } from "./ResourceDetails";
 import { makeResource } from "../test/makeResource";
+import userEvent from "@testing-library/user-event";
 
 describe("ResourceDetails", () => {
   it("shows all of the resource's data in a dialog", () => {
@@ -27,5 +28,15 @@ describe("ResourceDetails", () => {
 
     const tags = within(dialog).getByRole("list", { name: "Tags" });
     expect(within(tags).getAllByRole("listitem")).toHaveLength(4);
+  });
+  it("calls onClose when the close button is clicked", async () => {
+    const user = userEvent.setup();
+    const onClose = vi.fn();
+
+    render(<ResourceDetails resource={makeResource()} onClose={onClose} />);
+
+    await user.click(screen.getByRole("button", { name: "Close" }));
+
+    expect(onClose).toHaveBeenCalledTimes(1);
   });
 });
